@@ -477,27 +477,29 @@ ldconfig
 
 ### Set An Environment Variable
 
-As discussed in
-[issue ticket #2](https://github.com/eddelbuettel/mkl4deb/issues/2),
-loading the GNU OpenMP library along with MKL one can lead to issues.
-This is most easily prevented by setting an environment variable
-`MKL_THREADING_LAYER=GNU` in either `/etc/environment` or your local
-per-user settings.  Here we use the file in `/etc`:
+As discussed in [issue ticket #2](https://github.com/eddelbuettel/mkl4deb/issues/2),
+mixing Intel OpenMP and GNU OpenMP run-times in one application can lead to issues. 
+
+Since most of the open-source performance libraries use GNU OpenMP it is safer to make the MKL
+library also use GNU OpenMP as well by setting `MKL_THREADING_LAYER=GNU` in either
+`/etc/environment` or your local per-user settings. 
+
+Here we use the file in `/etc`:
 
 ```sh
 echo "MKL_THREADING_LAYER=GNU" >> /etc/environment
 ```
 
-Thanks to Evarist Fomenko from Intel's Novosibirsk office for help with point.
+Thanks to Evarist Fomenko from Intel's Novosibirsk office for help with this point.
 
 
 ### Use the MKL
 
 Now the MKL is 'known' and the default. If we start R, its `sessionInfo()` shows the MKL:
 
-```r
-# Matrix products: default                            
-# BLAS/LAPACK: /opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/lib/intel64_lin/libmkl_rt.so        
+```sh
+Matrix products: default                            
+BLAS/LAPACK: /opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/lib/intel64_lin/libmkl_rt.so
 ```
 
 ### Benchmarks
