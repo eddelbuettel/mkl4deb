@@ -475,6 +475,22 @@ echo "/opt/intel/mkl/lib/intel64" >> /etc/ld.so.conf.d/mkl.conf
 ldconfig
 ```
 
+### Set An Environment Variable
+
+As discussed in
+[issue ticket #2](https://github.com/eddelbuettel/mkl4deb/issues/2),
+loading the GNU OpenMP library along with MKL one can lead to issues.
+This is most easily prevented by setting an environment variable
+`MKL_THREADING_LAYER=GNU` in either `/etc/environment` or your local
+per-user settings.  Here we use the file in `/etc`:
+
+```sh
+echo "MKL_THREADING_LAYER=GNU" >> /etc/environment
+```
+
+Thanks to Evarist Fomenko from Intel's Novosibirsk office for help with point.
+
+
 ### Use the MKL
 
 Now the MKL is 'known' and the default. If we start R, its `sessionInfo()` shows the MKL:
@@ -517,7 +533,8 @@ benchmarking---we just ran one SVD. More to do as time permits...
 
 ### Removal, if needed
 
-Another rather nice benefit of the package management is that clean removal is also possible:
+Another rather nice benefit of the package management is that clean
+removal is also possible:
 
 ```sh
 root@c9f8062fbd93:/tmp# apt-get autoremove intel-mkl-64bit-2018.2-046
@@ -545,6 +562,20 @@ root@c9f8062fbd93:/tmp#
 ```
 
 where we said 'no' just to illustrate the option.
+
+As a second step, you want to also update the _alternatives_ setting via 
+
+```sh
+update-alternatives --remove libblas.so-x86_64-linux-gnu     \
+                             /opt/intel/mkl/lib/intel64/libmkl_rt.so 
+update-alternatives --remove libblas.so.3-x86_64-linux-gnu   \
+                             /opt/intel/mkl/lib/intel64/libmkl_rt.so 
+update-alternatives --remove liblapack.so-x86_64-linux-gnu   \
+                             /opt/intel/mkl/lib/intel64/libmkl_rt.so 
+update-alternatives --remove liblapack.so.3-x86_64-linux-gnu \
+                             /opt/intel/mkl/lib/intel64/libmkl_rt.so 
+```
+
 
 ### Summary
 

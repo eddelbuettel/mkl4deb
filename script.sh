@@ -28,3 +28,5 @@ echo "/opt/intel/lib/intel64"     >  /etc/ld.so.conf.d/mkl.conf
 echo "/opt/intel/mkl/lib/intel64" >> /etc/ld.so.conf.d/mkl.conf
 ldconfig
 
+echo "MKL_THREADING_LAYER=GNU" >> /etc/environment
+
