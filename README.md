@@ -1,8 +1,8 @@
 
 ## MKL for .deb-based systems: An easy recipe
 
-This post describes how to _easily_ install the 
-[Intel Math Kernel Library (MKL)](https://software.intel.com/en-us/mkl?cid=sem43700010399172562&intel_term=%2Bintel%20%2Bmkl&gclid=Cj0KCQjwzcbWBRDmARIsAM6uChXqzD4ACUJqCiu3zRJKA9rkC31XOhm9lIkEYiwBITMR_8hJbIAExF8aAn_LEALw_wcB&gclsrc=aw.ds) on a Debian or Ubuntu system. 
+This post describes how to _easily_ install the
+[Intel Math Kernel Library (MKL)](https://software.intel.com/en-us/mkl?cid=sem43700010399172562&intel_term=%2Bintel%20%2Bmkl&gclid=Cj0KCQjwzcbWBRDmARIsAM6uChXqzD4ACUJqCiu3zRJKA9rkC31XOhm9lIkEYiwBITMR_8hJbIAExF8aAn_LEALw_wcB&gclsrc=aw.ds) on a Debian or Ubuntu system.
 Very good basic documentation is provided by Intel [at their
 site](https://software.intel.com/en-us/articles/installing-intel-free-libs-and-python-apt-repo). The discussion here
 is more narrow as it focusses just on the Math Kernel Library (MKL).
@@ -38,7 +38,7 @@ apt-get update
 
 <details>
 As a personal aside, I still use the awesome `wajig` frontend to `dpkg`, `apt` and more by
-[Graham Williams](https://togaware.com/about/graham-williams/) (of [rattle](https://cran.r-project.org/package=rattle) fame). 
+[Graham Williams](https://togaware.com/about/graham-williams/) (of [rattle](https://cran.r-project.org/package=rattle) fame).
 Among other tricks, `wajig` keeps state and therefore "knows" what packages are new.  Here, we see _a lot_:
 
 ```sh
@@ -440,7 +440,7 @@ apt-get install intel-mkl-64bit-2018.2-046
 
 This picks the 64-bit only variant of the (currently) most recent builds.      
 
-There is a slight cost:  a 500mb download of 39 packages which install to 1.9 gb! 
+There is a slight cost:  a 500mb download of 39 packages which install to 1.9 gb!
 Other than that it is easy: one command!   Compare that with the days of yore when
 we fetched shar archives of NETLIB...
 
@@ -478,11 +478,11 @@ ldconfig
 ### Set An Environment Variable
 
 As discussed in [issue ticket #2](https://github.com/eddelbuettel/mkl4deb/issues/2),
-mixing Intel OpenMP and GNU OpenMP run-times in one application can lead to issues. 
+mixing Intel OpenMP and GNU OpenMP run-times in one application can lead to issues.
 
 Since most of the open-source performance libraries use GNU OpenMP it is safer to make the MKL
 library also use GNU OpenMP as well by setting `MKL_THREADING_LAYER=GNU` in either
-`/etc/environment` or your local per-user settings. 
+`/etc/environment` or your local per-user settings.
 
 Here we use the file in `/etc`:
 
@@ -506,17 +506,17 @@ BLAS/LAPACK: /opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/lib/intel64
 
 
 ```r
-# Vanilla r-base Rocker with default reference BLAS 
-> n <- 1e3 ; X <- matrix(rnorm(n*n),n,n);  system.time(svd(X)) 
-   user  system elapsed 
-  2.239   0.004   2.266 
-> 
+# Vanilla r-base Rocker with default reference BLAS
+> n <- 1e3 ; X <- matrix(rnorm(n*n),n,n);  system.time(svd(X))
+   user  system elapsed
+  2.239   0.004   2.266
+>
 
 # OpenBlas added to r-base Rocker
->  n <- 1e3 ; X <- matrix(rnorm(n*n),n,n);  system.time(svd(X)) 
-   user  system elapsed 
-  1.367   2.297   0.353 
-> 
+>  n <- 1e3 ; X <- matrix(rnorm(n*n),n,n);  system.time(svd(X))
+   user  system elapsed
+  1.367   2.297   0.353
+>
 
 # MKL added to r-base Rocker
 > n <- 1e3 ; X <- matrix(rnorm(n*n),n,n)  
@@ -544,17 +544,17 @@ Reading package lists... Done
 Building dependency tree       
 Reading state information... Done
 The following packages will be REMOVED:
-  intel-comp-l-all-vars-18.0.2-199 intel-comp-nomcu-vars-18.0.2-199 intel-mkl-64bit-2018.2-046 
-  intel-mkl-cluster-2018.2-199 intel-mkl-cluster-c-2018.2-199 intel-mkl-cluster-common-2018.2-199 
-  intel-mkl-cluster-f-2018.2-199 intel-mkl-cluster-rt-2018.2-199 intel-mkl-common-2018.2-199 
-  intel-mkl-common-c-2018.2-199 intel-mkl-common-c-ps-2018.2-199 intel-mkl-common-f-2018.2-199 
-  intel-mkl-common-ps-2018.2-199 intel-mkl-core-2018.2-199 intel-mkl-core-c-2018.2-199 
-  intel-mkl-core-f-2018.2-199 intel-mkl-core-ps-2018.2-199 intel-mkl-core-rt-2018.2-199 
-  intel-mkl-doc-2018 intel-mkl-doc-ps-2018 intel-mkl-f95-2018.2-199 intel-mkl-f95-common-2018.2-199 
-  intel-mkl-gnu-2018.2-199 intel-mkl-gnu-c-2018.2-199 intel-mkl-gnu-f-2018.2-199 intel-mkl-gnu-f-rt-2018.2-199 
-  intel-mkl-gnu-rt-2018.2-199 intel-mkl-pgi-2018.2-199 intel-mkl-pgi-c-2018.2-199 intel-mkl-pgi-f-2018.2-199 
-  intel-mkl-pgi-rt-2018.2-199 intel-mkl-psxe-2018.2-046 intel-mkl-tbb-2018.2-199 intel-mkl-tbb-rt-2018.2-199 
-  intel-openmp-18.0.2-199 intel-psxe-common-2018.2-046 intel-psxe-common-doc-2018 intel-tbb-libs-2018.2-199 
+  intel-comp-l-all-vars-18.0.2-199 intel-comp-nomcu-vars-18.0.2-199 intel-mkl-64bit-2018.2-046
+  intel-mkl-cluster-2018.2-199 intel-mkl-cluster-c-2018.2-199 intel-mkl-cluster-common-2018.2-199
+  intel-mkl-cluster-f-2018.2-199 intel-mkl-cluster-rt-2018.2-199 intel-mkl-common-2018.2-199
+  intel-mkl-common-c-2018.2-199 intel-mkl-common-c-ps-2018.2-199 intel-mkl-common-f-2018.2-199
+  intel-mkl-common-ps-2018.2-199 intel-mkl-core-2018.2-199 intel-mkl-core-c-2018.2-199
+  intel-mkl-core-f-2018.2-199 intel-mkl-core-ps-2018.2-199 intel-mkl-core-rt-2018.2-199
+  intel-mkl-doc-2018 intel-mkl-doc-ps-2018 intel-mkl-f95-2018.2-199 intel-mkl-f95-common-2018.2-199
+  intel-mkl-gnu-2018.2-199 intel-mkl-gnu-c-2018.2-199 intel-mkl-gnu-f-2018.2-199 intel-mkl-gnu-f-rt-2018.2-199
+  intel-mkl-gnu-rt-2018.2-199 intel-mkl-pgi-2018.2-199 intel-mkl-pgi-c-2018.2-199 intel-mkl-pgi-f-2018.2-199
+  intel-mkl-pgi-rt-2018.2-199 intel-mkl-psxe-2018.2-046 intel-mkl-tbb-2018.2-199 intel-mkl-tbb-rt-2018.2-199
+  intel-openmp-18.0.2-199 intel-psxe-common-2018.2-046 intel-psxe-common-doc-2018 intel-tbb-libs-2018.2-199
   intel-tbb-libs-32bit-2018.2-199 libisl15
 0 upgraded, 0 newly installed, 40 to remove and 0 not upgraded.
 After this operation, 1,904 kB disk space will be freed.
@@ -565,17 +565,17 @@ root@c9f8062fbd93:/tmp#
 
 where we said 'no' just to illustrate the option.
 
-As a second step, you want to also update the _alternatives_ setting via 
+As a second step, you want to also update the _alternatives_ setting via
 
 ```sh
 update-alternatives --remove libblas.so-x86_64-linux-gnu     \
-                             /opt/intel/mkl/lib/intel64/libmkl_rt.so 
+                             /opt/intel/mkl/lib/intel64/libmkl_rt.so
 update-alternatives --remove libblas.so.3-x86_64-linux-gnu   \
-                             /opt/intel/mkl/lib/intel64/libmkl_rt.so 
+                             /opt/intel/mkl/lib/intel64/libmkl_rt.so
 update-alternatives --remove liblapack.so-x86_64-linux-gnu   \
-                             /opt/intel/mkl/lib/intel64/libmkl_rt.so 
+                             /opt/intel/mkl/lib/intel64/libmkl_rt.so
 update-alternatives --remove liblapack.so.3-x86_64-linux-gnu \
-                             /opt/intel/mkl/lib/intel64/libmkl_rt.so 
+                             /opt/intel/mkl/lib/intel64/libmkl_rt.so
 ```
 
 
@@ -584,5 +584,12 @@ update-alternatives --remove liblapack.so.3-x86_64-linux-gnu \
 Package management systems are fabulous.  Kudos to Intel for supporting `apt` (and also `yum` in case you are on an rpm-based system).
 We can install the MKL with just a few commands (which we regrouped in [this script](script.sh)).   
 
-The MKL has a serious footprint with an installed size of just under 2gb.  But for those doing extended amounts of numerical analysis, 
+The MKL has a serious footprint with an installed size of just under 2gb.  But for those doing extended amounts of numerical analysis,
 installing this library may well be worth it.
+
+### Appendix
+
+_2021 Update:_  The post and script were originally written in 2018, and while
+they have been updated, things do sometimes change. So these days for example Ubuntu
+has (meta-)package [intel-mkl](https://packages.ubuntu.com/source/focal/intel-mkl)
+starting from release 20.04 ("focal") and never---so there you can just say `sudo apt install intel-mkl`.
