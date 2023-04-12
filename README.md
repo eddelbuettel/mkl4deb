@@ -1,3 +1,6 @@
+**Please note**: This is an _inactive_ repository preserved as a starting point in case someone want to revisit or study the script. Please see the [appendix below](https://github.com/eddelbuettel/mkl4deb#appendix) -- you likely want the MKL now included in your distro instead of following this by now rather old script.  
+  
+  
 
 ## MKL for .deb-based systems: An easy recipe
 
